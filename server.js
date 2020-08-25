@@ -5,22 +5,17 @@ if (process.env.NODE_ENV !== "production") {
   const express = require("express");
   const app = express();
   
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-    next();
-  });
+  var cors = require("cors");
+  app.use(cors());
   
   var mongoose = require("mongoose");
   var port = process.env.PORT || 5000;
-  if (port == 5000)
+  if (process.env.NODE_ENV !== "production")
     mongoose.connect(process.env.LOCAL_DATABASE_URL, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
-  else
+  else 
     mongoose.connect(process.env.DATABASE_URL, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
@@ -33,8 +28,7 @@ if (process.env.NODE_ENV !== "production") {
   //const app = express();
   const jwt = require("jsonwebtoken");
   
-  var cors = require("cors");
-  //app.use(cors());
+  
   
   //app.use(express.json());
   var bodyParser = require("body-parser");
@@ -284,7 +278,7 @@ if (process.env.NODE_ENV !== "production") {
   );
   
   function authenticateToken(req, res, next) {
-   
+    //console.log(455)
     const authHeader = req.headers["authorization"];
     
     const token = authHeader && authHeader.split(" ")[1];
