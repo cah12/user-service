@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
   }
 
+  const express = require("express");
   const app = express();
   
   app.use(function(req, res, next) {
@@ -28,7 +29,7 @@ if (process.env.NODE_ENV !== "production") {
   const User = require("./models/user");
   const RefreshToken = require("./models/refreshToken");
   
-  const express = require("express");
+  //const express = require("express");
   //const app = express();
   const jwt = require("jsonwebtoken");
   
