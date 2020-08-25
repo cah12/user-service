@@ -25,7 +25,10 @@ if (process.env.NODE_ENV !== "production") {
   var cors = require("cors");
   app.use(cors());
   
-  app.use(express.json());
+  //app.use(express.json());
+  var bodyParser = require("body-parser");
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
   
   
   async function saveRefreshToken(token) {
