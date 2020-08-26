@@ -6,6 +6,7 @@ if (process.env.NODE_ENV !== "production") {
   const app = express();
   
   var cors = require("cors");
+  app.options("*", cors())
   app.use(cors());
   
   var mongoose = require("mongoose");
