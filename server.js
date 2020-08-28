@@ -6,7 +6,6 @@ if (process.env.NODE_ENV !== "production") {
   const app = express();
   
   var cors = require("cors");
-  app.options("*", cors())
   app.use(cors());
   
   var mongoose = require("mongoose");
@@ -300,7 +299,7 @@ if (process.env.NODE_ENV !== "production") {
     } );
   }
   
-  app.listen(5000, function () {
+  app.listen(process.env.PORT || 5000, function () {
     console.log("Listening on port", 5000);
   });
   
