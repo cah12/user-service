@@ -12,12 +12,12 @@ if (process.env.NODE_ENV !== "production") {
   var mongoose = require("mongoose");
   var port = process.env.PORT || 5000;
   if (process.env.NODE_ENV !== "production")
-    mongoose.connect(process.env.LOCAL_DATABASE_URL, {
+    mongoose.connect("mongodb://localhost/myappdatabase", {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
   else 
-    mongoose.connect(process.env.DATABASE_URL, {
+    mongoose.connect("mongodb://cahuser:cahuser@ds023468.mlab.com:23468/cahuserdb", {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
@@ -61,7 +61,7 @@ if (process.env.NODE_ENV !== "production") {
       }
       jwt.verify(
         refreshToken.token,
-        process.env.REFRESH_TOKEN_SECRET,
+        "secret2",
         (err, user) => {
           if (err) return res.sendStatus(403);
           var payLoad = {
@@ -122,7 +122,7 @@ if (process.env.NODE_ENV !== "production") {
           username: newUser.username,
         };
         const accessToken = generateAccessToken(payLoad);
-        const refreshToken = jwt.sign(payLoad, process.env.REFRESH_TOKEN_SECRET);      
+        const refreshToken = jwt.sign(payLoad, "secret2");      
         await saveRefreshToken(refreshToken);
   
         //Uncomment the code below to see if logout clears the token from the database
@@ -165,7 +165,7 @@ if (process.env.NODE_ENV !== "production") {
           username: user.username,
         };
         const accessToken = generateAccessToken(payLoad);
-        const refreshToken = jwt.sign(payLoad, process.env.REFRESH_TOKEN_SECRET);   
+        const refreshToken = jwt.sign(payLoad, "secret2");   
         //console.log("accessToken:", accessToken)  
         //console.log("refreshToken:", refreshToken)  
         await saveRefreshToken(refreshToken);
@@ -286,7 +286,7 @@ if (process.env.NODE_ENV !== "production") {
     
     if (token == null) return res.sendStatus(401);
     //console.log(455, token)
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    jwt.verify(token, "secret", (err, user) => {
       //console.log("user", user)
       if (err) return res.sendStatus(403);
       req.user = user;
@@ -295,7 +295,7 @@ if (process.env.NODE_ENV !== "production") {
   }
   
   function generateAccessToken(payLoad) {
-    return jwt.sign(payLoad, process.env.ACCESS_TOKEN_SECRET , {
+    return jwt.sign(payLoad, "secret", {
       expiresIn: "15s",
     } );
   }
